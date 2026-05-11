@@ -10,3 +10,6 @@ logs
 node_modules
 temp
 cache
+.env
+.env.local
+.drizzle

@@ -2,12 +2,14 @@ import process from 'node:process'
 import * as jwtLib from 'jsonwebtoken'
 
 const PRIVATE_KEY = process.env.JWT_SECRET || '123456'
+const EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d'
+
 export type JwtPayload = {
   userId: string
   username: string
 }
 export const jwt = {
-  sign<T extends JwtPayload>(data: T, expiresIn: string = '1d') {
+  sign<T extends JwtPayload>(data: T, expiresIn: string = EXPIRES_IN) {
     return jwtLib.sign(data, PRIVATE_KEY, {
       algorithm: 'HS256',
       expiresIn: expiresIn as any,
