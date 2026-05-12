@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Nitro Starter"
-  tagline: A production-ready Nitro.js v3 starter template with TypeScript, JWT authentication, Zod validation, and VitePress documentation.
+  tagline: A production-ready Nitro.js v3 starter template with TypeScript, JWT authentication, Drizzle ORM, Redis caching, Zod validation, and VitePress documentation.
   image:
     src: /logo.svg
     alt: Nitro Starter
@@ -23,6 +23,10 @@ features:
     details: Full TypeScript support with strict type checking and modern ESM modules.
   - title: JWT Authentication
     details: Built-in plugin and middleware scaffolding for token-based authentication.
+  - title: Drizzle ORM
+    details: PostgreSQL database integration with Drizzle ORM, schema management, migrations, and Drizzle Studio.
+  - title: Redis Caching
+    details: Redis integration via ioredis with a composable utility for get/set/del operations.
   - title: Zod Validation
     details: Request body validation using Zod schemas for type-safe API inputs.
   - title: VitePress Docs

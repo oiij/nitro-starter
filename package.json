@@ -65,6 +65,7 @@
     "drizzle-orm": "^0.45.2",
     "eslint": "^10.3.0",
     "eslint-plugin-format": "^2.0.1",
+    "ioredis": "^5.10.1",
     "jsonwebtoken": "^9.0.3",
     "lint-staged": "^17.0.4",
     "nanoid": "^5.1.11",

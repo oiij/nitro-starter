@@ -56,8 +56,14 @@ docker run -p 5677:5677 nitro-starter
 Set environment variables in production:
 
 ```bash
+export DATABASE_URL=your-production-database-url
+export REDIS_HOST=your-production-redis-host
+export REDIS_PORT=your-production-redis-port
+export REDIS_USERNAME=your-production-redis-username
+export REDIS_PASSWORD=your-production-redis-password
 export JWT_SECRET=your-production-secret
-export API_KEY=your-production-key
+export JWT_EXPIRES_IN=2h
+export JWT_REFRESH_EXPIRES_IN=30d
 node .output/server/index.mjs
 ```
 

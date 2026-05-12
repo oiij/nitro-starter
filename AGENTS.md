@@ -8,6 +8,10 @@
 - `pnpm type:check` — TypeScript (`tsc --noEmit`)
 - `pnpm test` — Vitest in watch mode; use `pnpm test run` for single run
 - `pnpm docs:dev` — VitePress docs dev server
+- `pnpm db:generate` — Generate Drizzle migrations
+- `pnpm db:migrate` — Apply Drizzle migrations
+- `pnpm db:push` — Push schema directly to DB
+- `pnpm db:studio` — Open Drizzle Studio GUI
 
 ## Required Order for Verification
 
@@ -24,6 +28,8 @@ pnpm only (enforced by `preinstall` hook). Uses `shamefully-hoist=true` in `.npm
   - `server/middleware/` — Nitro middleware (runs on every request)
   - `server/plugins/` — Nitro plugins (run at startup)
   - `server/utils/` — Shared utilities (auto-imported by Nitro)
+  - `server/db/` — Database layer (Drizzle ORM + postgres). NOT auto-imported — use explicit imports from `~/db`.
+    - `server/db/schema/` — Drizzle schema definitions
 - **`docs/`** — VitePress documentation site
 - `~/*` path alias maps to `./server/*` (tsconfig)
 
@@ -32,6 +38,8 @@ pnpm only (enforced by `preinstall` hook). Uses `shamefully-hoist=true` in `.npm
 - **Nitro**: `nitro.config.ts` — dev port 5677
 - **ESLint**: `@antfu/eslint-config` with formatters enabled; `.agents/` is ignored
 - **Vitest**: globals enabled, jsdom environment, Vue plugin
+- **Drizzle**: `drizzle.config.ts` — schema in `server/db/schema/`, migrations output to `.drizzle/migrations`
+- **Redis**: `ioredis` via `server/utils/redis.ts` — composable `useRedis(prefix, baseTTL?)` for get/set/del/exists/keys; `set` falls back to `baseTTL` when no TTL is given
 - **Commits**: Conventional commits via `commitlint` + `cz-git`. Emoji prefixed. Use `pnpm cz` for interactive commit.
 
 ## Gotchas

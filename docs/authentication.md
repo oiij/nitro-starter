@@ -1,12 +1,11 @@
 # Authentication
 
-This starter includes JWT authentication scaffolding with a plugin, middleware, and utility functions.
+This starter includes JWT authentication scaffolding with middleware and utility functions.
 
 ## How It Works
 
-1. **Plugin** (`server/plugins/inject-token.ts`) - Reads the `Authorization` header on each request
-2. **Middleware** (`server/middleware/verify-token.ts`) - Accesses the injected token from event context
-3. **Utils** (`server/utils/jwt.ts`) - JWT sign, verify, and decode functions
+1. **Middleware** (`server/middleware/verify-token.ts`) - Verifies the JWT from the `Authorization` header on each request
+2. **Utils** (`server/utils/jwt.ts`) - JWT sign, verify, and decode functions
 
 ## JWT Utility
 
@@ -15,30 +14,14 @@ The `server/utils/jwt.ts` provides three methods:
 ```ts
 import { jwt } from '~/utils/jwt'
 
-// Sign a token (expires in 1 day)
-const token = jwt.sign({ userId: 1, role: 'admin' })
+// Sign a token (expires in 1d by default)
+const token = jwt.sign({ userId: '1', username: 'john' })
 
 // Verify a token
-const payload = await jwt.verify<{ userId: number, role: string }>(token)
+const payload = await jwt.verify<{ userId: string, username: string }>(token)
 
 // Decode without verification
 const decoded = jwt.decode(token)
-```
-
-## Plugin: Token Injection
-
-The plugin reads the `Authorization` header and makes it available in the event context:
-
-```ts
-// server/plugins/inject-token.ts
-import { definePlugin } from 'nitro'
-
-export default definePlugin((nitroApp) => {
-  nitroApp.hooks.hook('request', (event) => {
-    const token = event.req.headers.get('authorization')
-    // Token is now available in event.context._token
-  })
-})
 ```
 
 ## Middleware: Token Verification
@@ -96,10 +79,12 @@ export default defineHandler(async (event) => {
 
 ## Environment Variables
 
-Set your JWT secret in `.env`:
+Set your JWT config in `.env`:
 
 ```env
 JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=2h
+JWT_REFRESH_EXPIRES_IN=30d
 ```
 
 ::: warning

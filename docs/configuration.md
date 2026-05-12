@@ -8,16 +8,10 @@ The main configuration file is `nitro.config.ts`:
 import { defineConfig } from 'nitro'
 
 export default defineConfig({
-  // Server directory (root by default)
-  serverDir: './',
-
-  // Dev server settings
+  serverDir: './server',
   devServer: {
     port: 5677,
   },
-
-  // Additional options
-  // https://nitro.unjs.io/config
 })
 ```
 
@@ -27,15 +21,15 @@ The project extends a shared tsconfig:
 
 ```json
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@oiij/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "jsxImportSource": "vue",
-    "moduleResolution": "Bundler",
     "paths": {
-      "~/*": ["./src/*"]
-    }
+      "~/*": ["./server/*"]
+    },
+    "types": ["node", "vitest/globals"]
   },
-  "include": ["src", "docs"],
+  "include": ["server", "docs", "*.d.ts"],
   "exclude": ["node_modules", "dist", "test"]
 }
 ```
@@ -98,19 +92,71 @@ Conventional commits are enforced via `commitlint.config.js` with `cz-git` for i
 | perf     | Performance   |
 | ci       | CI/CD         |
 
+## Drizzle Configuration
+
+Database ORM powered by [Drizzle Kit](https://orm.drizzle.team/kit-docs/overview):
+
+```ts
+// drizzle.config.ts
+import process from 'node:process'
+import { defineConfig } from 'drizzle-kit'
+
+export default defineConfig({
+  schema: './server/db/schema/index.ts',
+  out: './.drizzle/migrations',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: process.env.DATABASE_URL || '',
+  },
+})
+```
+
+Available commands:
+
+| Command             | Description                 |
+| ------------------- | --------------------------- |
+| `pnpm db:generate`  | Generate migrations         |
+| `pnpm db:migrate`   | Apply migrations            |
+| `pnpm db:push`      | Push schema directly to DB  |
+| `pnpm db:studio`    | Open Drizzle Studio GUI     |
+
+## Redis Configuration
+
+The project uses `ioredis` for Redis integration. Connection is configured via environment variables:
+
+```ts
+// server/utils/redis.ts
+import Redis from 'ioredis'
+
+export const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: Number(process.env.REDIS_PORT),
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
+  db: 0,
+})
+```
+
+The `useRedis(prefix)` composable provides namespaced key operations (get/set/del/exists/keys).
+
 ## Environment Variables
 
 Create a `.env` file for local configuration:
 
 ```env
-# Server
-PORT=5677
+# Database (PostgreSQL)
+DATABASE_URL=your-database-url
+
+# Redis
+REDIS_HOST=your-redis-url
+REDIS_PORT=your-redis-port
+REDIS_USERNAME=your-redis-username
+REDIS_PASSWORD=your-redis-password
 
 # JWT
 JWT_SECRET=your-secret-key
-
-# API
-API_KEY=your-api-key
+JWT_EXPIRES_IN=2h
+JWT_REFRESH_EXPIRES_IN=30d
 ```
 
 ::: warning

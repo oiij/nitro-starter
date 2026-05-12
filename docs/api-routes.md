@@ -11,7 +11,7 @@ Create a file in `server/api/` to define a route:
 import { defineHandler } from 'nitro'
 
 export default defineHandler(() => {
-  return 'Hello World!'
+  return 'Nitro is amazing!'
 })
 ```
 

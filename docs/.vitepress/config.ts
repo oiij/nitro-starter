@@ -51,6 +51,8 @@ export default defineConfig({
         text: 'Features',
         items: [
           { text: 'Authentication', link: '/authentication' },
+          { text: 'Database', link: '/database' },
+          { text: 'Caching', link: '/caching' },
           { text: 'Validation', link: '/validation' },
         ],
       },
@@ -80,7 +82,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '~': resolve(__dirname, '../../src'),
+        '~': resolve(__dirname, '../../server'),
       },
     },
   },
