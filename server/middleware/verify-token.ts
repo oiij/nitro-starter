@@ -9,7 +9,8 @@ const PUBLIC_PATHS = [
 
 export default defineMiddleware(async (event) => {
   const url = event.url.pathname
-  if (!PUBLIC_PATHS.some(path => url.startsWith(path))) {
+
+  if (url.startsWith('/api') && !PUBLIC_PATHS.some(path => url.startsWith(path))) {
     const token = (event.req.headers.get('authorization') || '').replace('Bearer ', '')
     const [err, res] = await to(jwt.verify(token))
     if (err) {

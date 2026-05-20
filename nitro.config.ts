@@ -5,4 +5,7 @@ export default defineConfig({
   devServer: {
     port: 5677,
   },
+  features: {
+    websocket: true,
+  },
 })
