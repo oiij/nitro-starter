@@ -54,9 +54,11 @@ export { schema }
 
 ::: warning
 `server/db/` is **NOT** auto-imported by Nitro. Use explicit imports:
+
 ```ts
 import { db } from '~/db'
 ```
+
 :::
 
 ## Usage in Routes

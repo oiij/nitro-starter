@@ -18,8 +18,8 @@ REDIS_PASSWORD=your-redis-password
 The Redis client is initialized in `server/utils/redis.ts`:
 
 ```ts
-import Redis from 'ioredis'
 import process from 'node:process'
+import Redis from 'ioredis'
 
 export const redis = new Redis({
   host: process.env.REDIS_HOST,
@@ -45,13 +45,13 @@ When `set` is called without a TTL argument, it falls back to the `baseTTL` prov
 
 Available methods:
 
-| Method       | Description                            |
-| ------------ | -------------------------------------- |
-| `get(key)`   | Get value by key (auto-parsed JSON)    |
+| Method                  | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `get(key)`              | Get value by key (auto-parsed JSON)        |
 | `set(key, value, ttl?)` | Set value with TTL (falls back to baseTTL) |
-| `del(key)`   | Delete a key                           |
-| `exists(key)`| Check if key exists                    |
-| `keys()`     | List all keys with the prefix          |
+| `del(key)`              | Delete a key                               |
+| `exists(key)`           | Check if key exists                        |
+| `keys()`                | List all keys with the prefix              |
 
 ## Usage in Routes
 
@@ -62,7 +62,7 @@ import { useRedis } from '~/utils/redis'
 
 export default defineHandler(async (event) => {
   const { id } = event.context.params
-  const cache = useRedis<{ id: string; name: string }>('users')
+  const cache = useRedis<{ id: string, name: string }>('users')
 
   // Try cache first
   const cached = await cache.get(id)

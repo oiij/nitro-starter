@@ -113,12 +113,12 @@ export default defineConfig({
 
 Available commands:
 
-| Command             | Description                 |
-| ------------------- | --------------------------- |
-| `pnpm db:generate`  | Generate migrations         |
-| `pnpm db:migrate`   | Apply migrations            |
-| `pnpm db:push`      | Push schema directly to DB  |
-| `pnpm db:studio`    | Open Drizzle Studio GUI     |
+| Command            | Description                |
+| ------------------ | -------------------------- |
+| `pnpm db:generate` | Generate migrations        |
+| `pnpm db:migrate`  | Apply migrations           |
+| `pnpm db:push`     | Push schema directly to DB |
+| `pnpm db:studio`   | Open Drizzle Studio GUI    |
 
 ## Redis Configuration
 
